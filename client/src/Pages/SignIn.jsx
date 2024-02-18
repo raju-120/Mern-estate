@@ -6,7 +6,7 @@ import OAuth from '../components/OAuth';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const {loading,error} = useSelector((state) =>state.user);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -18,6 +18,7 @@ export default function SignIn() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
@@ -28,7 +29,7 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      
+      console.log(data);
       if(data.success === false){
         dispatch(signInFailure(data.message));
         return;
@@ -59,11 +60,13 @@ export default function SignIn() {
         />
 
         <button
-          disabled={loading}
+          
           className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
         >
-          {loading ? 'Loading...' : 'Sign In'}
+          Sign In
+        
         </button>
+
         <OAuth />
       </form>
 
